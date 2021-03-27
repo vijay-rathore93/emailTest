@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.emailService.model.Account;
@@ -34,25 +35,25 @@ public class EmailController {
 	private final ReportExtractor reportExtractor;
 
 	@PostMapping("/activationMail")
-	public ResponseEntity<ResponseDTO> sendMailForResetPass(@RequestBody Account account)
+	public ResponseEntity<ResponseDTO> sendMailForResetPass(@RequestHeader("email") String email,@RequestHeader("url") String url)
 			throws MessagingException, IOException {
-		emailService.sendMailForVerification(account,EmailMessages.ACTIVATION_LINK_SUBJECT,"confirmEmail");
+		emailService.sendMailForVerification(url,email,EmailMessages.ACTIVATION_LINK_SUBJECT,"confirmEmail");
 		return new ResponseEntity<ResponseDTO>(new ResponseDTO(EmailMessages.ACTIVATION_LINK_SUCCESS, HttpStatus.OK.value()),
 				HttpStatus.OK);
 	}
 
 	@PostMapping("/passwordChange")
-	public ResponseEntity<ResponseDTO> sendMailForresetPassword(@RequestBody Account account)
+	public ResponseEntity<ResponseDTO> sendMailForresetPassword(@RequestHeader("email") String email,@RequestHeader("url") String url)
 			throws MessagingException, IOException {
-		emailService.sendMailForVerification(account,EmailMessages.RESET_PASSWORD_LINK_SUBJECT,"resetPasswordd");
+		emailService.sendMailForVerification(url,email,EmailMessages.RESET_PASSWORD_LINK_SUBJECT,"resetPasswordd");
 		return new ResponseEntity<ResponseDTO>(new ResponseDTO(EmailMessages.RESET_PASSWORD_LINK_SUCCESS, HttpStatus.OK.value()),
 				HttpStatus.OK);
 	}
 
 	@PostMapping("/orderPlaced")
-	public ResponseEntity<ResponseDTO> sendMailForOrderPlaced(@RequestBody Account account)
+	public ResponseEntity<ResponseDTO> sendMailForOrderPlaced(@RequestHeader("email") String email,@RequestHeader("url") String url)
 			throws MessagingException, IOException {
-		emailService.sendMailForVerification(account,EmailMessages.ORDER_CONFIRMATION_LINK_SUBJECT,"orderCancellation");
+		emailService.sendMailForVerification(url,email,EmailMessages.ORDER_CONFIRMATION_LINK_SUBJECT,"orderCancellation");
 		return new ResponseEntity<ResponseDTO>(new ResponseDTO(EmailMessages.ORDER_CONFIRMATION_LINK_SUCCESS, HttpStatus.OK.value()),
 				HttpStatus.OK);
 	}
@@ -66,9 +67,9 @@ public class EmailController {
 	}
 
 	@PostMapping("/replacementItm")
-	public ResponseEntity<ResponseDTO> sendMailForReplacementItm(@RequestBody Account account)
+	public ResponseEntity<ResponseDTO> sendMailForReplacementItm(@RequestHeader("email") String email,@RequestHeader("url") String url)
 			throws MessagingException, IOException {
-		emailService.sendMailForVerification(account,EmailMessages.ORDER_REPLACEMENT_LINK_SUBJECT,"orderCancellation");
+		emailService.sendMailForVerification(url,email,EmailMessages.ORDER_REPLACEMENT_LINK_SUBJECT,"orderCancellation");
 		return new ResponseEntity<ResponseDTO>(new ResponseDTO(EmailMessages.ORDER_REPLACEMENT_LINK_SUCCESS, HttpStatus.OK.value()),
 				HttpStatus.OK);
 	}

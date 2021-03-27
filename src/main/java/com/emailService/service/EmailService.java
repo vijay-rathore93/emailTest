@@ -22,13 +22,13 @@ public class EmailService {
 
 	private final SpringTemplateEngine templateEngine;
 
-	public void sendMailForVerification(Account account, String subject,String templateName) throws MessagingException {
+	public void sendMailForVerification(String url,String email, String subject,String templateName) throws MessagingException {
 		final Context context = new Context();
-		context.setVariable("url", account.getUrl());
+		context.setVariable("url", url);
 		String body = templateEngine.process(templateName, context);
 		MimeMessage mail = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mail, true);
-		helper.setTo(account.getEmail());
+		helper.setTo(email);
 		helper.setSubject(subject);
 		helper.setText(body, true);
 		mailSender.send(mail);
