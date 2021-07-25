@@ -10,5 +10,5 @@ spring:
           auth: true
     host: smtp.gmail.com
     username: rathorvijay529@gmail.com
-    password: jayshriram@1
+    password: !VijayRathor93
     port: 587
